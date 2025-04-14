@@ -3,6 +3,8 @@ package vercors.sif.unverifedcode.examples.dummy;
 import vercors.sif.unverifedcode.examples.explicit.DemoClass;
 
 public class UnverifiedClass {
+
+    public Object ref;
     public int field;
     public void unverifiedCall(){}
     public static void unverifiedFunction(Object arg){
