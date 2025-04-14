@@ -59,6 +59,10 @@ public class UnverifiedReceiver {
     // requires demoClass.getClass() == DemoClass.class && hidden(demoClass)
     // is first part necessary? hidden(demoClass) should imply demoClass.getClass() is verified Class
     // how would demoClass be hidden, if it was not directly created with a verified Constructor call of verified Class?
+    // or put differently: if demoClass is an instance of an unverified subclass, then hidden(demoClass) cannot hold
+
+    //2nd observation: hidden(demoClass) is sufficient but not necessary.
+    // demoClass.getClass() == DemoClass.class is already sufficient
     public static void verifiedSubclass(DemoClass demoClass, int secret) {
         demoClass.demoMethod(secret);
     }
