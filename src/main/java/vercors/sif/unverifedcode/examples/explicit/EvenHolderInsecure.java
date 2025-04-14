@@ -1,5 +1,5 @@
 //from F.Neckers Master Thesis p.17-18
-package vercors.sif.unverifedcode.examples.implicit;
+package vercors.sif.unverifedcode.examples.explicit;
 
 import static vercors.sif.unverifedcode.examples.dummy.UnverifiedClass.unverifiedFunction;
 
