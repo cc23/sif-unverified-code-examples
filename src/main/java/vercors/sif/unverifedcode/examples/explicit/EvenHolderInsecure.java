@@ -10,6 +10,7 @@ public class EvenHolderInsecure {
         this.f = i;
     }
 
+    //insecure
     public static void main(int secret) {
         EvenHolderInsecure ph = new EvenHolderInsecure();
         unverifiedFunction(ph);

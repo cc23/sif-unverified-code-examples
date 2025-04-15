@@ -30,7 +30,7 @@ public class Simple {
 
     // insecure
     public int getNotReadable(){
-        return readable;
+        return notReadable;
     }
 
     //insecure

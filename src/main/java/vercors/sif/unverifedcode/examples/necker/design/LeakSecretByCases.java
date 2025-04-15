@@ -16,7 +16,7 @@ public class LeakSecretByCases {
         return demoClass;
     }
 
-    //insecure
+    //insecure, either this method or the demoClass Invariant should fail
     public static void case1(int secret) {
         //demoClass is leaked through the getDemoClass method
         demoClass.f = secret;
@@ -24,7 +24,7 @@ public class LeakSecretByCases {
 
     //insecure
     public static void case2(int secret) {
-        UnverifiedClass unverifiedClass = new UnverifiedClass();
+        UnverifiedClass unverifiedClass = new UnverifiedClass(); // adv. spawns new thread in constructor
         DemoClass leakedObject = new DemoClass();
         //leak by assigning to public field of unverified object
         unverifiedClass.ref = leakedObject;
@@ -70,7 +70,7 @@ public class LeakSecretByCases {
     //insecure
     public static void case7(int secret) {
         //leakedObject gotten from public field of an unverified object
-        DemoClass leakedObject = unverifiedContainer.getItem();
+        DemoClass leakedObject = unverifiedContainer.item;
         leakedObject.f = secret;
     }
 }

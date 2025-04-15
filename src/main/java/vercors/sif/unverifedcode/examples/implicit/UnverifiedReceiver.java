@@ -76,7 +76,8 @@ public class UnverifiedReceiver {
     }
 
     //secure
-    // requires demoClass.getClass() == DemoClass.class && hidden(demoClass)
+    // requires demoClass.getClass() == DemoClass.class
+    //assuming demoClass.demoMethod is not a lowEvent
     public static void verifiedSubclassHighEvent(DemoClass demoClass, int secret) {
         if (secret == 42) {
             demoClass.demoMethod(0);

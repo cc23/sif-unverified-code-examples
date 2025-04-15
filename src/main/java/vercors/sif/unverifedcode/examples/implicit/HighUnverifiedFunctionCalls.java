@@ -24,7 +24,7 @@ public class HighUnverifiedFunctionCalls {
         }
     }
 
-    //secure -> check if possible
+    //secure -> disallow incompleteness
     public static void sameArgs(int secret) {
         if (secret > 0) {
             unverifiedFunction(0);
@@ -33,7 +33,7 @@ public class HighUnverifiedFunctionCalls {
         }
     }
 
-    // probably insecure?
+    // insecure? -> attacker model? can we see the name of a class w/out reflection? memory allocation?
     public static void subclassArg(int secret) {
         DemoClass obj1 = new DemoClass(0);
         DemoClass obj2 = new DemoClass(0) {
@@ -43,7 +43,7 @@ public class HighUnverifiedFunctionCalls {
         unverifiedFunction(argForCall);
     }
 
-    // probably insecure?
+    //  insecure? memory allocation? -> first disallow it
     public static void argsOnlyDiffInPrivateFields(int secret) {
         DemoClass obj1 = new DemoClass(0);
         DemoClass obj2 = new DemoClass(0);
@@ -54,7 +54,18 @@ public class HighUnverifiedFunctionCalls {
         unverifiedFunction(argForCall);
     }
 
-    // probably insecure?
+    //  insecure!
+    public static void argsOnlyDiffInPublicFields(int secret) {
+        DemoClass obj1 = new DemoClass(0);
+        DemoClass obj2 = new DemoClass(2);
+        obj1.f = 1;
+        obj2.f = 2;
+        DemoClass argForCall = secret > 0 ? obj1 : obj2;
+
+        unverifiedFunction(argForCall);
+    }
+
+    // insecure? memory allocation?
     public static void differentObjects(int secret) {
         DemoClass obj1 = new DemoClass(0);
         DemoClass obj2 = new DemoClass(0);
