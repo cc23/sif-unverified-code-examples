@@ -1,4 +1,4 @@
-package vercors.sif.unverifedcode.examples.readablefields.packagepriv;
+package vercors.sif.unverifedcode.examples.concealedfields.packagepriv;
 
 public class Leaker {
     // secure

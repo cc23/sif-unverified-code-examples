@@ -1,4 +1,4 @@
-package vercors.sif.unverifedcode.examples.readablefields;
+package vercors.sif.unverifedcode.examples.concealedfields;
 
 // Wir brauchen eine zusätzliche Specification, um zu sagen, dass ein Field nicht exposed wird -> tatsächlich "private" ist.
 // Es ist secure secrets in solchen Feldern zu speichern, auch wenn das Objekt Leakable ist.
