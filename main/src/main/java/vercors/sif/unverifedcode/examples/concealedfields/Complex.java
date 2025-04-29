@@ -8,8 +8,6 @@ import static vercors.sif.unverifedcode.examples.dummy.UnverifiedClass.unverifie
 
 public class Complex {
 
-    //invariant leakable(this) ==> low(readable)
-
     //modifiable_fields=(notReadable, readable)
     //concealed_fields=(notReadable)
 

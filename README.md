@@ -19,7 +19,7 @@ The 5 cases of leaking objects (i.e. passing them to unverified code) based on F
 6. A reference to the object is **returned by an unverified method**
 7. A reference to the object is **retrieved from a public field of an unverified object**
 
-Examples for every case can be found [here](src/main/java/vercors/sif/unverifedcode/examples/necker/design/LeakSecretByCases.java)
+Examples for every case can be found [here](main/src/main/java/vercors/sif/unverifedcode/examples/necker/design/LeakSecretByCases.java)
 
 ### Ways to leak high values
 #### Concealed Fields

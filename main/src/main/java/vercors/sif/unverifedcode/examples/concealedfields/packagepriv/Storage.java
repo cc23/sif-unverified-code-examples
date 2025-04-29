@@ -6,6 +6,7 @@ public class Storage {
 
     protected int readable;
     int notReadable;
+    protected int protectedNotReadable;
 
     public int getReadable() {
         return readable;

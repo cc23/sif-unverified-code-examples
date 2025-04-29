@@ -12,8 +12,9 @@ public class StoreSecretToLeaked {
         unverifiedFunction(myObject);
         myObject.f = secret;
     }
-
-    //secure under assumption, that packagePrivate field has no getters etc.
+    
+    //insecure! package private must be treated like public.
+    // -> adversary can create same package and access package private fields
     public static void storeSecretToLeakedObjectPackagePriv(int secret) {
         DemoClass myObject = new DemoClass();
         unverifiedFunction(myObject);
