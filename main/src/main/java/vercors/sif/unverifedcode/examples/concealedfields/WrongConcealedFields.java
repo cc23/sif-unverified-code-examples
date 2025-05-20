@@ -4,7 +4,7 @@ import static vercors.sif.unverifedcode.examples.dummy.UnverifiedClass.unverifie
 
 public class WrongConcealedFields {
     // concealed = {notReallyConcealed}
-    // inv = low(notReallyConcealed) -> disallow low expressions in invariants
+    // inv = low(notReallyConcealed)
     private int notReallyConcealed;
 
     // requires perm(this.notReallyConcealed, read);
