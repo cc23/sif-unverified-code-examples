@@ -9,10 +9,12 @@ public class PseudoConcealed {
     private int f;
     private int g;
 
+    //secure
     public int getG() {
         return g;
     }
 
+    //secure
     public int getF(){
         return f;
     }

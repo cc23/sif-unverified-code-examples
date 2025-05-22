@@ -43,8 +43,9 @@ public class ConditionallyLowAssignFail {
         if(secret > 0){
             conditionallyLowAssignFail.concealedField = 3;
         }
-        //following assignment fails, as it violates the invariant
+        //passes, as conditionallyLowAssign is hidden -> inv doesnt need to hold
         conditionallyLowAssignFail.flag = true;
+        //fails, since conditionallyLowAssingFail.concealedField is not low
         unverifiedFunction(conditionallyLowAssignFail.concealedField);
     }
 }

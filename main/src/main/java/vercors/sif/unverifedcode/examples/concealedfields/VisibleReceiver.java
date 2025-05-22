@@ -8,21 +8,28 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static vercors.sif.unverifedcode.examples.dummy.UnverifiedClass.unverifiedFunction;
 
 public class VisibleReceiver {
-    // conc = {unverifiedClass}
+    // conc = {unverifiedClass} --> disallowed!
     // invariant = low(unverifiedClass);
     private UnverifiedClass unverifiedClass;
 
-    //insecure!
+    //secure!
+    // passes 2nd verification since inv = low(unverifiedClass)
+    //requires lowEvent
+    //requires low(this.unverifiedClass)
     public void implicitLeaker() {
         unverifiedClass.unverifiedCall();
     }
 
-    //insecure! Also insecure if UnverifiedClass is verified!
+    //secure!
+    //passes 2nd verification since inv = low(unverifiedClass)
+    // requires lowEvent
+    // requires low(this.unverifiedClass)
     public void implicitLeakerAssignment() {
         unverifiedClass.field = 3;
     }
 
-    //secure!
+    //insecure!
+    // visibleReceiver.unverifiedClass is no longer concealed. Therefore, assignments need to be lowEvent
     public static void main(int secret, UnverifiedClass unverifiedClass1, UnverifiedClass unverifiedClass2) {
         VisibleReceiver visibleReceiver = new VisibleReceiver();
         unverifiedFunction(visibleReceiver);

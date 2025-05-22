@@ -18,6 +18,7 @@ public class ConditionallyLowAssignObservation {
 
     //requires acc(this.concealedField, write)
     //requires low(concealedField)
+    //requires flag && concealedField != this.concealedField ==> lowEvent && low(this)
     //ensures acc(this.concealedField, write)
     //ensures this.concealedField == concealedField
     public void setConcealedFieldLow(int concealedField) {
@@ -36,13 +37,26 @@ public class ConditionallyLowAssignObservation {
 
     // not secure!
     // OBSERVATION: assignments to fields that are only "conditionally low" still need to be lowEvent!
-    // that way verification of method setConcealedFieldLow fails
     public static void main(int secret) {
         ConditionallyLowAssignObservation conditionallyLowAssign = new ConditionallyLowAssignObservation();
         conditionallyLowAssign.setFlag(true);
         if(secret > 0){
             conditionallyLowAssign.setConcealedFieldLow(3);
         }
+        unverifiedFunction(conditionallyLowAssign.concealedField);
+    }
+
+    // secure!
+    // OBSERVATION: assignments to fields that are only "conditionally low" still need to be lowEvent!
+    public static void mainSecure(int secret) {
+        ConditionallyLowAssignObservation conditionallyLowAssign = new ConditionallyLowAssignObservation();
+        unverifiedFunction(conditionallyLowAssign);
+        conditionallyLowAssign.setFlag(false);
+        if(secret > 0){
+            conditionallyLowAssign.setConcealedFieldLow(3);
+        }
+        conditionallyLowAssign.setConcealedFieldLow(3);
+
         unverifiedFunction(conditionallyLowAssign.concealedField);
     }
 }

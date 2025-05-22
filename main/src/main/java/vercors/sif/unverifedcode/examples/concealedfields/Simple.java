@@ -8,7 +8,7 @@ import static vercors.sif.unverifedcode.examples.dummy.UnverifiedClass.unverifie
 
 public class Simple {
 
-    //invariant leakable(this) ==> low(readable)
+    //invariant low(readable)
 
     //modifiable_fields=(notReadable, readable)
     //concealed_fields=(notReadable)
@@ -24,6 +24,7 @@ public class Simple {
     public void setNotReadable(int i){
         this.notReadable = i;
     }
+
     public void setReadable(int i){
         this.readable = i;
     }
@@ -34,6 +35,8 @@ public class Simple {
     }
 
     //insecure
+    // requires low(i)
+    // fails 2nd verification because assignment to reabable needs to be lowEvent
     public void setReadableConditional(int i){
         if(notReadable > 0){
             readable = i;

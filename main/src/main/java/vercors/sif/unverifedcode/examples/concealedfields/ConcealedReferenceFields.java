@@ -1,6 +1,20 @@
 package vercors.sif.unverifedcode.examples.concealedfields;
 
 public class ConcealedReferenceFields {
+
+    //secure
+    public static void main2(int secret) {
+        A a = new A();
+        A a1 = new A();
+        a1.setPublicInt(1);
+        A a2 = new A();
+        a1.setPublicInt(2);
+        if(secret > 0) {
+            a.setA(a2);
+        }
+    }
+
+    //insecure
     public static void main(int secret) {
         B b = new B();
         B b1 = new B();
@@ -11,23 +25,14 @@ public class ConcealedReferenceFields {
             b.setB(b2);
         }
     }
-    public static void main2(int secret) {
-        A a = new A();
-        A a1 = new A();
-        a1.setPublicInt(1);
-        A b2 = new A();
-        a1.setPublicInt(2);
-        if(secret > 0) {
-            a.setA(b2);
-        }
-    }
 }
 class A {
     //conc = {a, concInt}
-    //mod = {a, concInt, publicInt}
+    //mod = {a, concInt}
     private A a;
     private int concInt;
     public int publicInt;
+
     // not secure
     public int getAPublicInt() {
         return a.publicInt;
@@ -46,6 +51,8 @@ class A {
         this.concInt = concInt;
     }
 
+    //requires lowEvent
+    //requires low(publicInt)
     public void setPublicInt(int publicInt) {
         this.publicInt = publicInt;
     }
@@ -54,6 +61,8 @@ class A {
 class B {
     // conc = {concInt}
     // mod = {b, concInt, publicInt}
+
+    //inv: low(b) && leakable(b)
     private B b;
     private int concInt;
     public int publicInt;
@@ -62,12 +71,17 @@ class B {
     public void setConcInt(int concInt) {
         this.concInt = concInt;
     }
+
     // secure
+    // requires lowEvent
+    // requires low(publicInt)
     public void setPublicInt(int publicInt) {
         this.publicInt = publicInt;
     }
 
     // secure
+    // requires lowEvent
+    // requires low(b)
     public void setB(B b) {
         this.b = b;
     }
@@ -76,14 +90,17 @@ class B {
     public int getBPublicInt() {
         return b.publicInt;
     }
+
     //not secure
     public int getBConcInt() {
         return b.concInt;
     }
+
     // secure
     public int getBBPublicInt() {
         return b.b.publicInt;
     }
+
     //not secure
     public int getBBConcInt() {
         return b.b.concInt;

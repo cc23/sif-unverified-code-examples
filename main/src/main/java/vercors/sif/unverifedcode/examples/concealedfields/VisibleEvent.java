@@ -7,7 +7,10 @@ import static vercors.sif.unverifedcode.examples.dummy.UnverifiedClass.unverifie
 public class VisibleEvent {
     // conc = {value}
     private int value;
+
     //insecure!
+    // requires low(this.value)
+    // fails 2nd verification, as low(this.value) doesn't hold (since it's not part of invariant)
     public void implicitLeaker(){
         if (value == 0){
             unverifiedFunction(1);

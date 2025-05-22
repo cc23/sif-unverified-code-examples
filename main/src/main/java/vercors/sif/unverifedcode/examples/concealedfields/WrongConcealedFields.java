@@ -3,10 +3,11 @@ package vercors.sif.unverifedcode.examples.concealedfields;
 import static vercors.sif.unverifedcode.examples.dummy.UnverifiedClass.unverifiedFunction;
 
 public class WrongConcealedFields {
-    // concealed = {notReallyConcealed}
+    // concealed = {notReallyConcealed} --> disallowed
     // inv = low(notReallyConcealed)
     private int notReallyConcealed;
 
+    //secure!
     // requires perm(this.notReallyConcealed, read);
     // ensures perm(this.notReallyConcealed, read);
     // ensures \result == this.notReallyConcealed;
@@ -14,10 +15,12 @@ public class WrongConcealedFields {
         return notReallyConcealed;
     }
 
-    private static void main(boolean secret){
+    // insecure!
+    // wrongConcealedFields.notReallyConcealed is no longer concealed. Therefore, assignments need to be lowEvent
+    private static void main(boolean secret) {
         WrongConcealedFields wrongConcealedFields = new WrongConcealedFields();
         unverifiedFunction(wrongConcealedFields);
-        if(secret){
+        if (secret) {
             wrongConcealedFields.notReallyConcealed = 4;
         }
     }
@@ -26,7 +29,7 @@ public class WrongConcealedFields {
 // ==> transformed after new viper encoding into:
 
 class WrongConcealedFieldsEncoded {
-    // concealed = {notReallyConcealed}
+    // concealed = {notReallyConcealed} --> not allowed!
     // inv = low(notReallyConcealed)
 
     private int notReallyConcealed;
@@ -43,6 +46,7 @@ class WrongConcealedFieldsEncoded {
     public int getNotReallyConcealed_l() {
         //assume low(this)
         //inhale (leakable(this), write)
+        //from invariant learn: low(notReallyConcealed) -> verifies
         return notReallyConcealed;
     }
 }

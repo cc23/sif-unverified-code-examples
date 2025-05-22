@@ -14,24 +14,26 @@ public class PrivateWriteToConcealedReferenceField {
 }
 
 class D {
-    // conc = {dConcealed}
+    // conc = {dConcealed} -> disallowed!
     // inv = low(dConcealed)
     public int field;
     public D d;
     private D dConcealed;
 
-    public int getAField() {
+    // secure
+    public int getDField() {
         return d.field;
     }
 
     // secure
     // requires lowEvent
-    // requires low(dConcealed)
+    // requires low(this.dConcealed)
     private void concealedToNonConcealed() {
         d = dConcealed;
     }
 
-    //insecure
+    // secure
+    // thanks to inv = low(dConcealed), passes 2nd verification
     public void concealedToNonConcealedPublic() {
         concealedToNonConcealed();
     }

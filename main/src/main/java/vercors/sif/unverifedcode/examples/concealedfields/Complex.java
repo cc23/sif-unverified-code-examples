@@ -11,6 +11,8 @@ public class Complex {
     //modifiable_fields=(notReadable, readable)
     //concealed_fields=(notReadable)
 
+    //inv: low(readable)
+
     private int notReadable;
     private int readable;
 

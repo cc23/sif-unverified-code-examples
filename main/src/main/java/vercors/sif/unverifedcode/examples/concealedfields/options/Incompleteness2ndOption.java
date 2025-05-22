@@ -9,6 +9,15 @@ public class Incompleteness2ndOption {
     private int concealedField;
     private boolean flag;
 
+    //not secure!
+    // 2nd verification fails. invariant is not strong enough to prove low(\result)
+    public int getConcealedField() {
+        if(!flag){
+            return -1;
+        }
+        return concealedField;
+    }
+
     //requires acc(this.concealedField, write)
     //requires low(concealedField)
     //requires lowEvent
@@ -31,6 +40,7 @@ public class Incompleteness2ndOption {
     }
 
 
+    //not secure!
     public static void main(int secret) {
         Incompleteness2ndOption incompleteness2ndOption = new Incompleteness2ndOption();
         incompleteness2ndOption.flag = false;

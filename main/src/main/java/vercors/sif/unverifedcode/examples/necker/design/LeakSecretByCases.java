@@ -8,22 +8,24 @@ import static vercors.sif.unverifedcode.examples.dummy.UnverifiedClass.unverifie
 
 // 6 cases of passing objects to unverified code (leaking)
 public class LeakSecretByCases {
-    private static UnverifiedContainer<DemoClass> unverifiedContainer;
-    private static DemoClass demoClass;
+    // invariant: low(demoClass) && leakable(demoClass)
+    // -> needed s.t. getter passes 2nd verification
+    private UnverifiedContainer<DemoClass> unverifiedContainer;
+    private DemoClass demoClass;
 
     //needed for case 1
-    public static DemoClass getDemoClass() {
+    public DemoClass getDemoClass() {
         return demoClass;
     }
 
     //insecure, either this method or the demoClass Invariant should fail
-    public static void case1(int secret) {
+    public void case1(int secret) {
         //demoClass is leaked through the getDemoClass method
         demoClass.f = secret;
     }
 
     //insecure
-    public static void case2(int secret) {
+    public void case2(int secret) {
         UnverifiedClass unverifiedClass = new UnverifiedClass(); // adv. spawns new thread in constructor
         DemoClass leakedObject = new DemoClass();
         //leak by assigning to public field of unverified object
@@ -32,7 +34,7 @@ public class LeakSecretByCases {
     }
 
     //insecure
-    public static void case3(int secret) {
+    public void case3(int secret) {
         DemoClass leakedObject = new DemoClass();
         //leak by assigning to public field of a leaked (by case 1) object
         demoClass.object = leakedObject;
@@ -40,7 +42,7 @@ public class LeakSecretByCases {
     }
 
     //insecure
-    public static void case4(int secret) {
+    public void case4(int secret) {
         DemoClass leakedObject = new DemoClass();
         //leak by passing as argument to a method of unverified object
         unverifiedFunction(leakedObject);
@@ -48,7 +50,7 @@ public class LeakSecretByCases {
     }
 
     //insecure
-    public static void case5(int secret) {
+    public void case5(int secret) {
         DemoClass leakedObject = new DemoClass();
         DemoClass helper = new DemoClass();
         helper.object = leakedObject;
@@ -61,14 +63,14 @@ public class LeakSecretByCases {
     //Other cases how leaked references can be obtained (but no new objects are passed to unverified code).
 
     //insecure
-    public static void case6(int secret) {
+    public void case6(int secret) {
         //leakedObject returned by unverified Method
         DemoClass leakedObject = unverifiedContainer.getItem();
         leakedObject.f = secret;
     }
 
     //insecure
-    public static void case7(int secret) {
+    public void case7(int secret) {
         //leakedObject gotten from public field of an unverified object
         DemoClass leakedObject = unverifiedContainer.item;
         leakedObject.f = secret;
